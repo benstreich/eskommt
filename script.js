@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const questionLine = document.createElement('div');
         questionLine.classList.add('output');
         consoleEl.appendChild(questionLine);
-        typeText(`Question ${currentQuestion + 1}: ${questions[currentQuestion].q}`, questionLine, 50, newPrompt);
+        typeText(`Frage ${currentQuestion + 1}: ${questions[currentQuestion].q}`, questionLine, 50, newPrompt);
     } else {
         appendLine(`<div class="output">du hurensohn bekommst gar nichts</div>`);
         newPrompt();
