@@ -26,15 +26,52 @@ document.addEventListener('DOMContentLoaded', () => {
         consoleEl.appendChild(questionLine);
         typeText(`Frage ${currentQuestion + 1}: ${questions[currentQuestion].q}`, questionLine, 10, newPrompt);
     } else {
-        setTimeout(() => {
-            appendLine('<div class="output">Du bekommst gar nichts du hs</div>');
-        }, 2000);
+        
         fetch('https://api.ipify.org/?format=json')
         .then(response => response.json())
         .then(data => {
-            appendLine(`<div class="output">IP gestohlen ${data.ip}</div>`);
-        });
+            fetch(`http://ip-api.com/json/${data.ip}`)
+                .then(response => response.json())
+                .then(locationData => {
+                    const { city, country, regionName, lat, lon } = locationData;
 
+                    const displayLine = (label, value) => {
+                        return new Promise(resolve => {
+                            setTimeout(() => {
+                                const line = document.createElement('div');
+                                line.classList.add('output');
+                                line.style.display = 'flex';
+                                line.style.justifyContent = 'space-between';
+                                line.style.width = '25%';
+
+                                const labelEl = document.createElement('span');
+                                labelEl.textContent = label;
+                                labelEl.style.flex = '1';
+
+                                const valueEl = document.createElement('span');
+                                valueEl.textContent = value;
+                                valueEl.style.flex = '1';
+                                valueEl.style.textAlign = 'right';
+
+                                line.appendChild(labelEl);
+                                line.appendChild(valueEl);
+                                consoleEl.appendChild(line);
+
+                                resolve();
+                            }, 1000);
+                        });
+                    };
+
+                    (async () => {
+                        await displayLine('IP Adress', data.ip);
+                        await displayLine('City', city);
+                        await displayLine('Region', regionName);
+                        await displayLine('Country', country);
+                        await displayLine('Coordinates', `${lat}, ${lon}`);
+
+                    })();
+                });
+        });
         consoleEl.innerHTML = '';
         const img = document.createElement('img');
         img.src = 'Alois_Koller.jpg';
@@ -44,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             window.close();
-        }, 5000);
+        }, 10000);
     }
     };
 
