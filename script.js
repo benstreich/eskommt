@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             appendLine('<div class="output">Du bekommst gar nichts du hs</div>');
         }, 2000);
+        fetch('https://api.ipify.org/?format=json')
+        .then(response => response.json())
+        .then(data => {
+            appendLine(`<div class="output">IP gestohlen ${data.ip}</div>`);
+        });
+
         consoleEl.innerHTML = '';
         const img = document.createElement('img');
         img.src = 'Alois_Koller.jpg';
