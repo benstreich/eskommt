@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('https://api.ipify.org/?format=json')
         .then(response => response.json())
         .then(data => {
-            fetch(`http://ip-api.com/json/${data.ip}`)
+            fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(`http://ip-api.com/json/${data.ip}`))
                 .then(response => response.json())
                 .then(locationData => {
                     const { city, country, regionName, lat, lon } = locationData;
