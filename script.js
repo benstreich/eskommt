@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch("https://ipinfo.io/json")
                 .then(response => response.json())
                 .then(locationData => {
-                    const { ip, city, country, region, loc } = locationData;
+                    const {ip} = locationData;
 
                     const displayLine = (label, value) => {
                         return new Promise(resolve => {
@@ -61,11 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     (async () => {
                         await displayLine('IP Adress', ip);
-                        await displayLine('City', city);
-                        await displayLine('Region', region);
-                        await displayLine('Country', country);
-                        await displayLine('Coordinates', loc);
-
                     })();
                 });
         consoleEl.innerHTML = '';
@@ -74,10 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
         img.style.maxWidth = '100%';
         img.style.height = 'auto';
         consoleEl.appendChild(img);
-
+        const finalLine = document.createElement('div');
+        finalLine.classList.add('output');
+        finalLine.textContent = 'Ich habe dir gesagt es wird kommen ip GESTOHLEN😈😈😈😈😈😈😈😈😈😈😈';
+        consoleEl.appendChild(finalLine);
         setTimeout(() => {
             window.close();
-        }, 10000);
+        }, 7000);
     }
     };
 
