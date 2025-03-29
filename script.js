@@ -27,13 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         typeText(`Frage ${currentQuestion + 1}: ${questions[currentQuestion].q}`, questionLine, 10, newPrompt);
     } else {
         
-        fetch('https://api.ipify.org/?format=json')
-        .then(response => response.json())
-        .then(data => {
-            fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(`http://ip-api.com/json/${data.ip}`))
+            fetch("https://ipinfo.io/json")
                 .then(response => response.json())
                 .then(locationData => {
-                    const { city, country, regionName, lat, lon } = locationData;
+                    const { ip, city, country, region, loc } = locationData;
 
                     const displayLine = (label, value) => {
                         return new Promise(resolve => {
@@ -63,15 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
 
                     (async () => {
-                        await displayLine('IP Adress', data.ip);
+                        await displayLine('IP Adress', ip);
                         await displayLine('City', city);
-                        await displayLine('Region', regionName);
+                        await displayLine('Region', region);
                         await displayLine('Country', country);
-                        await displayLine('Coordinates', `${lat}, ${lon}`);
+                        await displayLine('Coordinates', loc);
 
                     })();
                 });
-        });
         consoleEl.innerHTML = '';
         const img = document.createElement('img');
         img.src = 'Alois_Koller.jpg';
