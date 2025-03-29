@@ -24,10 +24,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const questionLine = document.createElement('div');
         questionLine.classList.add('output');
         consoleEl.appendChild(questionLine);
-        typeText(`Frage ${currentQuestion + 1}: ${questions[currentQuestion].q}`, questionLine, 50, newPrompt);
+        typeText(`Frage ${currentQuestion + 1}: ${questions[currentQuestion].q}`, questionLine, 10, newPrompt);
     } else {
-        appendLine(`<div class="output">du hurensohn bekommst gar nichts</div>`);
-        newPrompt();
+        setTimeout(() => {
+            appendLine('<div class="output">Du bekommst gar nichts du hs</div>');
+        }, 2000);
+        consoleEl.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = 'Alois_Koller.jpg';
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
+        consoleEl.appendChild(img);
+
+        setTimeout(() => {
+            window.close();
+        }, 5000);
     }
     };
 
@@ -45,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newPrompt = () => {
         const line = document.createElement('div');
-        line.innerHTML = '<span class="prompt">monkey@web:~$</span> <input autofocus />';
+        line.innerHTML = '<span class="prompt">lianeifert@😈:~$</span> <input autofocus />';
         consoleEl.appendChild(line);
         const input = line.querySelector('input');
         input.focus();
@@ -53,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 const userInput = input.value;
-                line.innerHTML = `<span class="prompt">monkey@web:~$</span> ${userInput}`;
+                line.innerHTML = `<span class="prompt">lianeifert@😈:~$</span> ${userInput}`;
                 if (currentQuestion < questions.length) {
                     handleAnswer(userInput);
                 } else {
@@ -63,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const typeText = (text, element, speed = 65, callback) => {
+    const typeText = (text, element, speed, callback) => {
         let i = 0;
         const typing = setInterval(() => {
             if (i < text.length) {
@@ -80,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcomeLine = document.createElement('div');
     welcomeLine.classList.add('output');
     consoleEl.appendChild(welcomeLine);
-    typeText('Hallo Lian😈\nBeantworte mir diese 5 Fragen und du erhälst einen Preis\nTipp: (Antworte immer wie die Frage)', welcomeLine, 50, askQuestion);
+    typeText('Hallo Lian😈\nBeantworte mir diese 5 Fragen und du erhälst einen Preis\nTipp: (Antworte immer wie die Frage)', welcomeLine, 10, askQuestion);
 
     document.body.addEventListener('click', () => {
         const input = document.querySelector('input');
