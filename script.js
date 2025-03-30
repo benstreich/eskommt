@@ -26,56 +26,30 @@ document.addEventListener('DOMContentLoaded', () => {
         consoleEl.appendChild(questionLine);
         typeText(`Frage ${currentQuestion + 1}: ${questions[currentQuestion].q}`, questionLine, 10, newPrompt);
     } else {
-        
-            fetch("https://ipinfo.io/json")
-                .then(response => response.json())
-                .then(locationData => {
-                    const {ip} = locationData;
+        fetch("https://ipinfo.io/json")
+            .then(response => response.json())
+            .then(data => {
+                // Clear the screen
+                consoleEl.innerHTML = '';
 
-                    const displayLine = (label, value) => {
-                        return new Promise(resolve => {
-                            setTimeout(() => {
-                                const line = document.createElement('div');
-                                line.classList.add('output');
-                                line.style.display = 'flex';
-                                line.style.justifyContent = 'space-between';
-                                line.style.width = '25%';
+                typeText(`Kommt dir das ${data.ip} bekannt vor?`, consoleEl, 10, () => {
+                    const img = document.createElement('img');
+                    img.src = 'Alois_Koller.jpg';
+                    img.style.maxWidth = '100%';
+                    img.style.height = 'auto';
+                    img.style.opacity = '0';
+                    img.style.transition = 'opacity 7s'; 
+                    consoleEl.appendChild(img);
 
-                                const labelEl = document.createElement('span');
-                                labelEl.textContent = label;
-                                labelEl.style.flex = '1';
+                    setTimeout(() => {
+                        img.style.opacity = '1';
+                    }, 100);
 
-                                const valueEl = document.createElement('span');
-                                valueEl.textContent = value;
-                                valueEl.style.flex = '1';
-                                valueEl.style.textAlign = 'right';
-
-                                line.appendChild(labelEl);
-                                line.appendChild(valueEl);
-                                consoleEl.appendChild(line);
-
-                                resolve();
-                            }, 1000);
-                        });
-                    };
-
-                    (async () => {
-                        await displayLine('IP Adress', ip);
-                    })();
+                    setTimeout(() => {
+                        window.close();
+                    }, 8000); // Close the window after the image effect
                 });
-        consoleEl.innerHTML = '';
-        const img = document.createElement('img');
-        img.src = 'Alois_Koller.jpg';
-        img.style.maxWidth = '100%';
-        img.style.height = 'auto';
-        consoleEl.appendChild(img);
-        const finalLine = document.createElement('div');
-        finalLine.classList.add('output');
-        finalLine.textContent = 'Ich habe dir gesagt es wird kommen ip GESTOHLEN😈😈😈😈😈😈😈😈😈😈😈';
-        consoleEl.appendChild(finalLine);
-        setTimeout(() => {
-            window.close();
-        }, 7000);
+            });
     }
     };
 
